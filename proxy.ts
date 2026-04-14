@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { AUTH_COOKIE_NAME } from "@/lib/auth";
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const isLoggedIn = request.cookies.get(AUTH_COOKIE_NAME)?.value === "1";
   const isLoginPath = pathname === "/login";

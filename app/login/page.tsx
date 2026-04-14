@@ -68,18 +68,17 @@ export default function LoginPage() {
       <div className="pointer-events-none absolute -bottom-20 right-0 h-64 w-64 rounded-full bg-fuchsia-300/40 blur-3xl" />
       <section className="w-full max-w-md rounded-3xl border border-white/70 bg-white/55 p-6 shadow-[0_24px_55px_rgba(14,165,233,0.25)] backdrop-blur-xl">
         <div className="mb-6 text-center">
-          <div className="mx-auto mb-3 flex h-16 w-16 items-center justify-center rounded-2xl bg-white/70 ring-1 ring-sky-200/70 shadow-sm">
-            <Image src="/logo.png" alt="MIPS Logo" width={44} height={44} priority />
+          <div className="mx-auto mb-3 flex items-center justify-center">
+            <Image src="/logo.png" alt="MIPS Logo" width={72} height={72} priority />
           </div>
           <h1 className="bg-gradient-to-r from-slate-900 via-sky-700 to-violet-700 bg-clip-text text-2xl font-bold text-transparent">
-            MIPS Admin Login
+            MIPS Dashboard
           </h1>
-          <p className="mt-1 text-sm text-slate-500">Sign in to continue to dashboard</p>
         </div>
 
         <form onSubmit={onSubmit} className="space-y-4">
           <label className="block text-sm font-semibold text-slate-700">
-            Admin
+            User
             <input
               type="text"
               value={username}

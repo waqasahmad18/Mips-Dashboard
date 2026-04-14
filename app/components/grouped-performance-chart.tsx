@@ -79,7 +79,7 @@ export function GroupedPerformanceChart() {
       </h2>
 
       <div className="mt-4 grid gap-4 md:grid-cols-2">
-        <label className="text-sm font-medium text-slate-700 dark:text-slate-200">
+        <label className="text-sm font-bold text-slate-900 dark:text-slate-100">
           Practice Name
           <select
             className="mt-1 w-full rounded-lg border border-slate-300 bg-white p-2 dark:border-slate-700 dark:bg-slate-800"
@@ -94,7 +94,7 @@ export function GroupedPerformanceChart() {
           </select>
         </label>
 
-        <label className="text-sm font-medium text-slate-700 dark:text-slate-200">
+        <label className="text-sm font-bold text-slate-900 dark:text-slate-100">
           Quality Measure ID
           <select
             className="mt-1 h-28 w-full rounded-lg border border-slate-300 bg-white p-2 dark:border-slate-700 dark:bg-slate-800"
