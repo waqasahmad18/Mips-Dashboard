@@ -208,6 +208,22 @@ export function SinglePerformanceChart({ onTabChange, onCategoryChange, onQuarte
       } as const;
     }
 
+    if (selectedCategory === "pi") {
+      return {
+        "2024": { Q1: 89, Q2: 88, Q3: 91, Q4: 90, overall: 90 },
+        "2025": { Q1: 91, Q2: 90, Q3: 93, Q4: 92, overall: 92 },
+        "2026": { Q1: 93, Q2: null, Q3: null, Q4: null, overall: 93 },
+      } as const;
+    }
+
+    if (selectedCategory === "ia") {
+      return {
+        "2024": { Q1: 92, Q2: 93, Q3: 94, Q4: 95, overall: 94 },
+        "2025": { Q1: 94, Q2: 95, Q3: 96, Q4: 97, overall: 96 },
+        "2026": { Q1: 98, Q2: null, Q3: null, Q4: null, overall: 98 },
+      } as const;
+    }
+
     if (selectedCategory === "cost") {
       return {
         "2024": { Q1: null, Q2: null, Q3: null, Q4: null, overall: null },
@@ -541,18 +557,7 @@ export function SinglePerformanceChart({ onTabChange, onCategoryChange, onQuarte
 
       {selectedQuarter === "Q1" || activeTab === "comparison" ? (
       isCategoryReady ? (
-      isGroupedOnlyCategory ? (
-        activeTab === "performance" ? null : (
-          <div className="mt-4 rounded-2xl border border-slate-200 bg-white/90 p-8 text-center shadow-sm">
-            <p className="text-lg font-bold text-slate-800">
-              Comparison view is not enabled for this category.
-            </p>
-            <p className="mt-2 text-sm text-slate-500">
-              Switch to Performance tab to view grouped data.
-            </p>
-          </div>
-        )
-      ) : activeTab === "performance" ? (
+      isGroupedOnlyCategory && activeTab === "performance" ? null : activeTab === "performance" ? (
         selectedCategory === "cost" ? (
           <div className="mt-4 h-[380px] w-full rounded-2xl border border-slate-300/80 bg-gradient-to-b from-white via-slate-50/60 to-slate-100/40 p-4 shadow-[0_18px_40px_rgba(100,116,139,0.15)] ring-1 ring-white/80">
             <ResponsiveContainer width="100%" height="100%">
