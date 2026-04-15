@@ -55,6 +55,12 @@ const BLANK_COST_COMPARISON_DATA = MONTHS.map((month) => ({
   y2025: null,
   y2026: null,
 }));
+const CATEGORY_COMPONENT_SCORES = {
+  quality: 30,
+  pi: 20,
+  ia: 15,
+  cost: 30,
+} as const;
 
 function IconStar() {
   return (
@@ -244,15 +250,14 @@ export function SinglePerformanceChart({ onTabChange, onCategoryChange }: Single
     });
   }, [filteredRows, selectedProviders, selectedMeasureIds, selectedCategory]);
 
-  const overallScore = useMemo(() => {
-    const selectedRows = filteredRows.filter(
-      (r) =>
-        selectedProviders.includes(r.providerName) &&
-        selectedMeasureIds.includes(r.qualityMeasureId),
-    );
-    if (selectedRows.length === 0) return 0;
-    return selectedRows.reduce((sum, r) => sum + r.performanceRate, 0) / selectedRows.length;
-  }, [filteredRows, selectedProviders, selectedMeasureIds]);
+  const overallScore = useMemo(
+    () =>
+      CATEGORY_COMPONENT_SCORES.quality +
+      CATEGORY_COMPONENT_SCORES.pi +
+      CATEGORY_COMPONENT_SCORES.ia +
+      CATEGORY_COMPONENT_SCORES.cost,
+    [],
+  );
   const isCategoryReady =
     selectedCategory === "quality" ||
     selectedCategory === "pi" ||
@@ -316,7 +321,7 @@ export function SinglePerformanceChart({ onTabChange, onCategoryChange }: Single
                   <Image src="/Quality.png" alt="Quality icon" width={34} height={34} />
                 </div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-white/85">Quality</p>
-                <p className="mt-2 text-base font-bold">15.00% of 30%</p>
+                <p className="mt-2 text-base font-bold">30 out of 30</p>
                 <p className="mt-1 text-xs text-white/90">Category score</p>
               </button>
               <span className="px-0.5 text-2xl font-black text-slate-500">+</span>
@@ -329,7 +334,7 @@ export function SinglePerformanceChart({ onTabChange, onCategoryChange }: Single
                   <Image src="/promoting-interoperability.png" alt="PI icon" width={34} height={34} />
                 </div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-white/85">Promoting Interoperability</p>
-                <p className="mt-2 text-base font-bold">25% of 25%</p>
+                <p className="mt-2 text-base font-bold">20 out of 25</p>
                 <p className="mt-1 text-xs text-white/90">Category weight</p>
               </button>
               <span className="px-0.5 text-2xl font-black text-slate-500">+</span>
@@ -355,7 +360,7 @@ export function SinglePerformanceChart({ onTabChange, onCategoryChange }: Single
                   <Image src="/Cost.png" alt="Cost icon" width={34} height={34} />
                 </div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-white/85">Cost</p>
-                <p className="mt-2 text-base font-bold">0% of 0%</p>
+                <p className="mt-2 text-base font-bold">30 out of 30</p>
                 <p className="mt-1 text-xs text-white/90">Category weight</p>
               </button>
               <span className="px-0.5 text-2xl font-black text-slate-500">=</span>
@@ -367,7 +372,7 @@ export function SinglePerformanceChart({ onTabChange, onCategoryChange }: Single
                 </div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-white/85">Overall Score</p>
                 <p className="mt-2 text-xl font-bold">{overallScore.toFixed(2)}%</p>
-                <p className="mt-1 text-xs text-white/90">From selected data</p>
+                <p className="mt-1 text-xs text-white/90">Total of all components</p>
               </div>
             </div>
       </div>

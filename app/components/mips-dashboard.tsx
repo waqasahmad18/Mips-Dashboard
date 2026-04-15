@@ -2,8 +2,6 @@
 import { useState } from "react";
 import { SinglePerformanceChart } from "./single-performance-chart";
 import { GroupedPerformanceChart } from "./grouped-performance-chart";
-import { GroupedPiChart } from "./grouped-pi-chart";
-import { GroupedIaChart } from "./grouped-ia-chart";
 import { GroupedCostChart } from "./grouped-cost-chart";
 
 export function MipsDashboard() {
@@ -31,8 +29,6 @@ export function MipsDashboard() {
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8">
         <SinglePerformanceChart onTabChange={setSingleTab} onCategoryChange={setSelectedCategory} />
         {singleTab === "performance" && selectedCategory === "quality" && <GroupedPerformanceChart />}
-        {singleTab === "performance" && selectedCategory === "pi" && <GroupedPiChart />}
-        {singleTab === "performance" && selectedCategory === "ia" && <GroupedIaChart />}
         {singleTab === "performance" && selectedCategory === "cost" && <GroupedCostChart />}
       </main>
     </div>
