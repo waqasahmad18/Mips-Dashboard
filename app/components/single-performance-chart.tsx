@@ -323,7 +323,7 @@ export function SinglePerformanceChart({ onTabChange, onCategoryChange }: Single
               <button
                 type="button"
                 onClick={() => setSelectedCategory("pi")}
-                className={`w-[10.1rem] cursor-pointer rounded-2xl border-2 border-white/25 bg-gradient-to-br from-[#f59e0b] to-[#f97316] px-4 py-4 text-left text-white shadow-[0_10px_20px_rgba(249,115,22,0.28)] transition ${selectedCategory === "pi" ? "scale-[1.03] border-white outline outline-4 outline-amber-200/90 ring-4 ring-white/55 shadow-[inset_0_0_0_2px_rgba(255,255,255,0.65),0_0_0_2px_rgba(245,158,11,0.38),0_14px_24px_rgba(249,115,22,0.4)]" : "opacity-90 hover:scale-[1.01] hover:border-white/50 hover:opacity-100"}`}
+                className={`w-[10.1rem] cursor-pointer rounded-2xl border-2 border-white/25 bg-gradient-to-b from-[#f3a1d2] to-[#df4fa2] px-4 py-4 text-left text-white shadow-[0_10px_20px_rgba(223,79,162,0.26)] transition ${selectedCategory === "pi" ? "scale-[1.03] border-white outline outline-4 outline-fuchsia-200/90 ring-4 ring-white/55 shadow-[inset_0_0_0_2px_rgba(255,255,255,0.65),0_0_0_2px_rgba(236,153,210,0.35),0_14px_24px_rgba(223,79,162,0.35)]" : "opacity-90 hover:scale-[1.01] hover:border-white/50 hover:opacity-100"}`}
               >
                 <div className="mb-3 inline-flex h-14 w-14 items-center justify-center rounded-full border border-white/50 bg-white/30 text-white backdrop-blur-sm shadow-[0_0_20px_rgba(255,255,255,0.3)]">
                   <Image src="/promoting-interoperability.png" alt="PI icon" width={34} height={34} />
