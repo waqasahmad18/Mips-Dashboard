@@ -15,13 +15,9 @@ export function GroupedPiChart() {
     () => Array.from(new Set(PI_PERFORMANCE_ROWS.map((r) => r.objectiveName))),
     [],
   );
-  const qualityMeasures = useMemo(
-    () => Array.from(new Set(PI_PERFORMANCE_ROWS.map((r) => r.qualityMeasureId))),
-    [],
-  );
 
   const [selectedPractice, setSelectedPractice] = useState(practices[0] ?? "");
-  const [selectedQualityMeasures, setSelectedQualityMeasures] = useState<string[]>(qualityMeasures);
+  const [selectedObjectives, setSelectedObjectives] = useState<string[]>(objectives);
 
   const chartData = useMemo(() => {
     return objectives
@@ -30,13 +26,13 @@ export function GroupedPiChart() {
           (r) =>
             r.practiceName === selectedPractice &&
             r.objectiveName === objective &&
-            selectedQualityMeasures.includes(r.qualityMeasureId),
+            selectedObjectives.includes(r.objectiveName),
         );
         if (matches.length === 0) return null;
         return { objective, performanceRate: PI_GROUPED_TARGET_RATES[idx] ?? 100 };
       })
       .filter(Boolean) as Array<{ objective: string; performanceRate: number }>;
-  }, [objectives, selectedPractice, selectedQualityMeasures]);
+  }, [objectives, selectedPractice, selectedObjectives]);
 
   return (
     <section className="relative mt-10 overflow-hidden rounded-2xl border border-amber-100 bg-white/85 p-5 shadow-2xl shadow-amber-100/60 backdrop-blur-sm dark:border-slate-700 dark:bg-slate-900/70">
@@ -60,18 +56,18 @@ export function GroupedPiChart() {
         </label>
 
         <label className="text-sm font-bold text-slate-900 dark:text-slate-100">
-          Quality Measure IDs (Multi Select)
+          Objective Name (Multi Select)
           <select
             className="mt-1 h-28 w-full rounded-lg border border-slate-300 bg-white p-2 dark:border-slate-700 dark:bg-slate-800"
-            value={selectedQualityMeasures}
+            value={selectedObjectives}
             multiple
             onChange={(e) =>
-              setSelectedQualityMeasures(Array.from(e.currentTarget.selectedOptions).map((x) => x.value))
+              setSelectedObjectives(Array.from(e.currentTarget.selectedOptions).map((x) => x.value))
             }
           >
-            {qualityMeasures.map((m) => (
-              <option key={m} value={m}>
-                {m}
+            {objectives.map((objective) => (
+              <option key={objective} value={objective}>
+                {objective}
               </option>
             ))}
           </select>

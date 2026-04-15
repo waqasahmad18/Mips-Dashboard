@@ -25,7 +25,7 @@ export async function POST(request: Request) {
 
   if (!isValid) {
     return NextResponse.json(
-      { ok: false, message: "Invalid admin credentials." },
+      { ok: false, message: "Invalid user credentials." },
       { status: 401 },
     );
   }
