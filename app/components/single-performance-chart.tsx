@@ -99,7 +99,6 @@ export function SinglePerformanceChart({ onTabChange, onCategoryChange }: Single
   const [rows, setRows] = useState<SingleRow[]>([]);
   const [selectedProviders, setSelectedProviders] = useState<string[]>([]);
   const [selectedMeasureIds, setSelectedMeasureIds] = useState<string[]>([]);
-  const [selectedPiQualityMeasures, setSelectedPiQualityMeasures] = useState<string[]>([]);
   const [activeTab, setActiveTab] = useState<SinglePerformanceTab>("performance");
   const [selectedCategory, setSelectedCategory] = useState<ScoreCategory>("quality");
   const [highlightedYear, setHighlightedYear] = useState<TrendYear | null>(null);
@@ -173,24 +172,12 @@ export function SinglePerformanceChart({ onTabChange, onCategoryChange }: Single
     () => Array.from(new Set(activeRows.map((r) => r.qualityMeasureId))),
     [activeRows],
   );
-  const piQualityMeasures = useMemo(
-    () => Array.from(new Set(activeRows.map((r) => r.groupMeasureId).filter(Boolean) as string[])),
-    [activeRows],
-  );
-
   useEffect(() => {
     setSelectedProviders(providers.slice(0, 3));
     setSelectedMeasureIds(measures.slice(0, 4));
-    setSelectedPiQualityMeasures(piQualityMeasures);
-  }, [selectedCategory, providers, measures, piQualityMeasures]);
+  }, [selectedCategory, providers, measures]);
 
-  const filteredRows = useMemo(() => {
-    if (selectedCategory !== "pi") return activeRows;
-    if (selectedPiQualityMeasures.length === 0) return [];
-    return activeRows.filter((row) =>
-      row.groupMeasureId ? selectedPiQualityMeasures.includes(row.groupMeasureId) : false,
-    );
-  }, [activeRows, selectedCategory, selectedPiQualityMeasures]);
+  const filteredRows = activeRows;
 
   const chartData = useMemo(() => {
     return selectedMeasureIds.map((measureId) => {
@@ -321,7 +308,7 @@ export function SinglePerformanceChart({ onTabChange, onCategoryChange }: Single
                   <Image src="/Quality.png" alt="Quality icon" width={34} height={34} />
                 </div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-white/85">Quality</p>
-                <p className="mt-2 text-base font-bold">30 out of 30</p>
+                <p className="mt-2 text-base font-bold">30% out of 30%</p>
                 <p className="mt-1 text-xs text-white/90">Category score</p>
               </button>
               <span className="px-0.5 text-2xl font-black text-slate-500">+</span>
@@ -334,7 +321,7 @@ export function SinglePerformanceChart({ onTabChange, onCategoryChange }: Single
                   <Image src="/promoting-interoperability.png" alt="PI icon" width={34} height={34} />
                 </div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-white/85">Promoting Interoperability</p>
-                <p className="mt-2 text-base font-bold">20 out of 25</p>
+                <p className="mt-2 text-base font-bold">20% out of 25%</p>
                 <p className="mt-1 text-xs text-white/90">Category weight</p>
               </button>
               <span className="px-0.5 text-2xl font-black text-slate-500">+</span>
@@ -360,7 +347,7 @@ export function SinglePerformanceChart({ onTabChange, onCategoryChange }: Single
                   <Image src="/Cost.png" alt="Cost icon" width={34} height={34} />
                 </div>
                 <p className="text-xs font-semibold uppercase tracking-wide text-white/85">Cost</p>
-                <p className="mt-2 text-base font-bold">30 out of 30</p>
+                <p className="mt-2 text-base font-bold">30% out of 30%</p>
                 <p className="mt-1 text-xs text-white/90">Category weight</p>
               </button>
               <span className="px-0.5 text-2xl font-black text-slate-500">=</span>
@@ -378,7 +365,7 @@ export function SinglePerformanceChart({ onTabChange, onCategoryChange }: Single
       </div>
 
       {activeTab === "performance" && isCategoryReady && (
-          <div className={`mt-4 grid gap-4 ${selectedCategory === "pi" ? "md:grid-cols-4" : "md:grid-cols-3"}`}>
+          <div className="mt-4 grid gap-4 md:grid-cols-3">
             <label className="text-sm font-bold text-slate-900 dark:text-slate-100">
               Practice Name
               {isCostSelected ? (
@@ -430,7 +417,7 @@ export function SinglePerformanceChart({ onTabChange, onCategoryChange }: Single
               {selectedCategory === "pi"
                 ? "Objective Name (Multi Select)"
                 : selectedCategory === "ia"
-                  ? "Quality Measure IDs (Multi Select)"
+                  ? "Acitivity ID (Multi Select)"
                 : "Quality Measure IDs (Multi Select)"}
               {isCostSelected ? (
                 <select
@@ -459,27 +446,6 @@ export function SinglePerformanceChart({ onTabChange, onCategoryChange }: Single
                 </select>
               )}
             </label>
-            {selectedCategory === "pi" ? (
-              <label className="text-sm font-bold text-slate-900 dark:text-slate-100">
-                Quality Measure IDs (Multi Select)
-                <select
-                  className="mt-1 h-28 w-full rounded-lg border border-slate-300 bg-white p-2 dark:border-slate-700 dark:bg-slate-800"
-                  value={selectedPiQualityMeasures}
-                  multiple
-                  onChange={(e) =>
-                    setSelectedPiQualityMeasures(
-                      Array.from(e.currentTarget.selectedOptions).map((x) => x.value),
-                    )
-                  }
-                >
-                  {piQualityMeasures.map((m) => (
-                    <option key={m} value={m}>
-                      {m}
-                    </option>
-                  ))}
-                </select>
-              </label>
-            ) : null}
           </div>
       )}
 
