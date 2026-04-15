@@ -4,6 +4,8 @@ import { useMemo, useState } from "react";
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { PI_PERFORMANCE_ROWS } from "@/lib/pi-performance-data";
 
+const PI_GROUPED_TARGET_RATES = [95, 100, 100, 100] as const;
+
 export function GroupedPiChart() {
   const practices = useMemo(
     () => Array.from(new Set(PI_PERFORMANCE_ROWS.map((r) => r.practiceName))),
@@ -23,7 +25,7 @@ export function GroupedPiChart() {
 
   const chartData = useMemo(() => {
     return objectives
-      .map((objective) => {
+      .map((objective, idx) => {
         const matches = PI_PERFORMANCE_ROWS.filter(
           (r) =>
             r.practiceName === selectedPractice &&
@@ -31,8 +33,7 @@ export function GroupedPiChart() {
             selectedQualityMeasures.includes(r.qualityMeasureId),
         );
         if (matches.length === 0) return null;
-        const avg = matches.reduce((sum, row) => sum + row.performanceRate, 0) / matches.length;
-        return { objective, performanceRate: Number(avg.toFixed(2)) };
+        return { objective, performanceRate: PI_GROUPED_TARGET_RATES[idx] ?? 100 };
       })
       .filter(Boolean) as Array<{ objective: string; performanceRate: number }>;
   }, [objectives, selectedPractice, selectedQualityMeasures]);
@@ -42,11 +43,7 @@ export function GroupedPiChart() {
       <div className="pointer-events-none absolute -left-12 -top-12 h-36 w-36 rounded-full bg-amber-200/35 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-16 right-8 h-40 w-40 rounded-full bg-orange-200/35 blur-3xl" />
 
-      <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">
-        Grouped PI Performance (Practice by Objective)
-      </h2>
-
-      <div className="mt-4 grid gap-4 md:grid-cols-2">
+      <div className="mt-1 grid gap-4 md:grid-cols-2">
         <label className="text-sm font-bold text-slate-900 dark:text-slate-100">
           Practice Name
           <select

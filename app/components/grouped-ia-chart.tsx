@@ -35,11 +35,7 @@ export function GroupedIaChart() {
       <div className="pointer-events-none absolute -left-12 -top-12 h-36 w-36 rounded-full bg-teal-200/35 blur-3xl" />
       <div className="pointer-events-none absolute -bottom-16 right-8 h-40 w-40 rounded-full bg-cyan-200/35 blur-3xl" />
 
-      <h2 className="text-lg font-bold text-slate-900 dark:text-slate-100">
-        Grouped IA Performance (Practice by Activity)
-      </h2>
-
-      <div className="mt-4 grid gap-4 md:grid-cols-2">
+      <div className="mt-1 grid gap-4 md:grid-cols-2">
         <label className="text-sm font-bold text-slate-900 dark:text-slate-100">
           Practice Name
           <select

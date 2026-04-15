@@ -2,11 +2,14 @@
 import { useState } from "react";
 import { SinglePerformanceChart } from "./single-performance-chart";
 import { GroupedPerformanceChart } from "./grouped-performance-chart";
+import { GroupedPiChart } from "./grouped-pi-chart";
+import { GroupedIaChart } from "./grouped-ia-chart";
 import { GroupedCostChart } from "./grouped-cost-chart";
 
 export function MipsDashboard() {
   const [singleTab, setSingleTab] = useState<"performance" | "comparison">("performance");
   const [selectedCategory, setSelectedCategory] = useState<"quality" | "pi" | "ia" | "cost">("quality");
+  const [selectedQuarter, setSelectedQuarter] = useState<"Q1" | "Q2" | "Q3" | "Q4" | "Overall">("Q1");
 
   return (
     <div className="flex min-h-full flex-1 flex-col bg-gradient-to-b from-slate-50 to-sky-50/40 dark:from-slate-950 dark:to-slate-950">
@@ -27,9 +30,39 @@ export function MipsDashboard() {
         </div>
       </header>
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8">
-        <SinglePerformanceChart onTabChange={setSingleTab} onCategoryChange={setSelectedCategory} />
-        {singleTab === "performance" && selectedCategory === "quality" && <GroupedPerformanceChart />}
-        {singleTab === "performance" && selectedCategory === "cost" && <GroupedCostChart />}
+        <SinglePerformanceChart
+          onTabChange={setSingleTab}
+          onCategoryChange={setSelectedCategory}
+          onQuarterChange={setSelectedQuarter}
+        />
+        {singleTab === "performance" && selectedQuarter === "Q1" && selectedCategory === "quality" && <GroupedPerformanceChart />}
+        {singleTab === "performance" && selectedCategory === "pi" && (
+          selectedQuarter === "Q1" ? (
+            <GroupedPiChart />
+          ) : (
+            <section className="mt-10 min-h-[470px] rounded-2xl border border-amber-100 bg-white/60 p-5 shadow-2xl shadow-amber-100/40 transition-all duration-300">
+              <div className="flex h-[420px] items-center justify-center rounded-xl border border-amber-200/70 bg-white/70">
+                <p className="text-sm font-semibold text-slate-500">
+                  Promoting Interoperability grouped view is available in Q1.
+                </p>
+              </div>
+            </section>
+          )
+        )}
+        {singleTab === "performance" && selectedCategory === "ia" && (
+          selectedQuarter === "Q1" ? (
+            <GroupedIaChart />
+          ) : (
+            <section className="mt-10 min-h-[470px] rounded-2xl border border-teal-100 bg-white/60 p-5 shadow-2xl shadow-teal-100/40 transition-all duration-300">
+              <div className="flex h-[420px] items-center justify-center rounded-xl border border-teal-200/70 bg-white/70">
+                <p className="text-sm font-semibold text-slate-500">
+                  Improvement Activity grouped view is available in Q1.
+                </p>
+              </div>
+            </section>
+          )
+        )}
+        {singleTab === "performance" && selectedQuarter === "Q1" && selectedCategory === "cost" && <GroupedCostChart />}
       </main>
     </div>
   );
