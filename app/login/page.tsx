@@ -69,7 +69,7 @@ export default function LoginPage() {
       <section className="w-full max-w-md rounded-3xl border border-white/70 bg-white/55 p-6 shadow-[0_24px_55px_rgba(14,165,233,0.25)] backdrop-blur-xl">
         <div className="mb-6 text-center">
           <div className="mx-auto mb-3 flex items-center justify-center">
-            <Image src="/logo.png" alt="MIPS Logo" width={72} height={72} priority />
+            <Image src="/logo.png" alt="MIPS Logo" width={92} height={92} priority />
           </div>
           <h1 className="bg-gradient-to-r from-slate-900 via-sky-700 to-violet-700 bg-clip-text text-2xl font-bold text-transparent">
             MIPS Dashboard
@@ -84,7 +84,7 @@ export default function LoginPage() {
               value={username}
               onChange={(event) => setUsername(event.target.value)}
               className="mt-1 w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 text-slate-800 outline-none transition focus:border-sky-500 focus:ring-2 focus:ring-sky-200"
-              placeholder="Enter admin id"
+              placeholder="Enter user id"
               autoComplete="username"
               required
             />
