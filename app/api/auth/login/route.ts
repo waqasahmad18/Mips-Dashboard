@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
-import { ADMIN_PASSWORD, ADMIN_USERNAME, AUTH_COOKIE_NAME } from "@/lib/auth";
+import { AUTH_COOKIE_NAME, DEFAULT_ADMIN_PASSWORD, DEFAULT_ADMIN_USERNAME } from "@/lib/auth";
+import { getDb } from "@/lib/mongodb";
+import { ensureAdminUser, verifyAdminCredentials } from "@/lib/admin-auth";
 
 type LoginBody = {
   username?: string;
@@ -21,7 +23,15 @@ export async function POST(request: Request) {
   const username = body.username?.trim() ?? "";
   const password = body.password ?? "";
   const remember = body.remember === true;
-  const isValid = username === ADMIN_USERNAME && password === ADMIN_PASSWORD;
+  let isValid = false;
+  try {
+    const db = await getDb();
+    await ensureAdminUser(db);
+    isValid = await verifyAdminCredentials(db, username, password);
+  } catch {
+    // Keep login available if database is temporarily unreachable.
+    isValid = username === DEFAULT_ADMIN_USERNAME && password === DEFAULT_ADMIN_PASSWORD;
+  }
 
   if (!isValid) {
     return NextResponse.json(

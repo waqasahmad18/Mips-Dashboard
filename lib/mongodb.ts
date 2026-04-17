@@ -4,6 +4,7 @@ const URI = process.env.MONGODB_URI;
 const DB_NAME = process.env.MONGODB_DB_NAME?.trim() || "mips_dashboard";
 
 export const SNAPSHOT_COLLECTION = "dashboard_snapshots";
+export const ADMIN_USERS_COLLECTION = "admin_users";
 
 type Cache = { promise: Promise<MongoClient> | null };
 const g = globalThis as unknown as { __mipsMongo?: Cache };
